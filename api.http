@@ -1,0 +1,37 @@
+@host = localhost:8888
+
+GET http://{{host}}/interview/645f4882bcc2918b5e4605b5 HTTP/1.1
+Content-Type: application/json
+###
+GET http://{{host}}/interview/all?limit=3&status=To Do HTTP/1.1
+Content-Type: application/json
+###
+PUT http://{{host}}/interview/645f4882bcc2918b5e4605b5/comment HTTP/1.1
+Content-Type: application/json
+
+{
+   "message":"add comment 002",
+   "created_by":{
+      "id":"645f2b47e0931117713e74ca",
+      "name":"โรบินฮู้ด",
+      "email":"user1@robinhood.co.th"
+   },
+   "created_at":"2023-05-13T10:00:00.000Z"
+}
+
+###
+PUT http://{{host}}/interview/645f4882bcc2918b5e4605b5/update HTTP/1.1
+Content-Type: application/json
+
+{
+   "id":"645f4882bcc2918b5e4605b5",
+   "description":"update description interview 005",
+   "status":"In Progress",
+   "created_by":{
+      "id":"645f2b47e0931117713e74ca",
+      "name":"โรบินฮู้ด",
+      "email":"user1@robinhood.co.th"
+   },
+   "created_at":"2023-01-04T10:00:00.000Z",
+   "updated_at":"2023-05-14T10:00:00.000Z"
+}
