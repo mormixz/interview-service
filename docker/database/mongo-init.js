@@ -6,7 +6,7 @@ db.interview.insertMany([
         description: "description interview 000",
         status: "Done",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 1, 2023 08:00:00"),
+        created_at: new Date("January 1, 2023 01:00:00"),
         comments: []
     },
     {
@@ -14,7 +14,7 @@ db.interview.insertMany([
         description: "description interview 001",
         status: "In Progress",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 1, 2023 09:00:00"),
+        created_at: new Date("January 1, 2023 02:00:00"),
         comments: []
     },
     {
@@ -22,22 +22,22 @@ db.interview.insertMany([
         description: "description interview 002",
         status: "To Do",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 1, 2023 10:00:00"),
+        created_at: new Date("January 1, 2023 03:00:00"),
         comments: [
             {
                 message: "comment 003",
                 created_by: new ObjectId("645f2b47e0931117713e74cb"),
-                created_at: new Date("January 2, 2023 18:00:00")
+                created_at: new Date("January 2, 2023 11:00:00")
             },
             {
                 message: "comment 002",
                 created_by: new ObjectId("645f2b47e0931117713e74cc"),
-                created_at: new Date("January 1, 2023 18:00:00")
+                created_at: new Date("January 1, 2023 11:00:00")
             },
             {
                 message: "comment 001",
                 created_by: new ObjectId("645f2b47e0931117713e74cb"),
-                created_at: new Date("January 1, 2023 15:00:00")
+                created_at: new Date("January 1, 2023 08:00:00")
             }
         ]
     },
@@ -46,12 +46,12 @@ db.interview.insertMany([
         description: "description interview 003",
         status: "To Do",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 1, 2023 15:00:00"),
+        created_at: new Date("January 1, 2023 07:00:00"),
         comments: [
             {
                 message: "comment 001",
                 created_by: new ObjectId("645f2b47e0931117713e74cb"),
-                created_at: new Date("January 1, 2023 18:00:00")
+                created_at: new Date("January 1, 2023 11:00:00")
             }
         ]
     },
@@ -60,7 +60,7 @@ db.interview.insertMany([
         description: "description interview 004",
         status: "To Do",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 2, 2023 10:00:00"),
+        created_at: new Date("January 2, 2023 03:00:00"),
         comments: []
     },
     {
@@ -68,7 +68,7 @@ db.interview.insertMany([
         description: "description interview 005",
         status: "To Do",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 3, 2023 10:00:00"),
+        created_at: new Date("January 3, 2023 03:00:00"),
         comments: []
     },
     {
@@ -76,9 +76,9 @@ db.interview.insertMany([
         description: "description interview 006",
         status: "To Do",
         created_by: new ObjectId("645f2b47e0931117713e74ca"),
-        created_at: new Date("January 4, 2023 10:00:00"),
+        created_at: new Date("January 4, 2023 03:00:00"),
         comments: []
-    },
+    }
 ]);
 
 db.createCollection('users');
