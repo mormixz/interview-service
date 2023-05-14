@@ -7,7 +7,7 @@ Service using Go and MongoDB
 docker-compose up -d
 ```
 
-### Library
+## Library
 * [Fiber](https://github.com/gofiber/fiber) - Go web framework
 * [MongoDB Go Driver](https://github.com/mongodb/mongo-go-driver) - The MongoDB supported driver for Go
 * [Viper](https://github.com/spf13/viper) - For Read Configuration
