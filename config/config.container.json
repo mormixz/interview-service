@@ -1,0 +1,10 @@
+{
+    "http_port": "8888",
+    "allow_cors": "*",
+    "mongo_db":{
+        "connection_string": "database:27017",
+        "connection_timeout": 5,
+        "db_name": "interview"
+    }
+
+}
