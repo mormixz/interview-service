@@ -10,7 +10,6 @@ services:
     container_name: interview-db
     ports:
       - 27017:27017
-    restart: always
 
   service:
     build:
@@ -19,7 +18,7 @@ services:
     networks: 
       - interview-network
     container_name: interview-service
-    restart: always
+    restart: on-failure
     depends_on: 
       - database 
     ports:
@@ -28,7 +27,7 @@ services:
       - ./config/config.container.json:/config.json
     command:
       - /interview-service
-  
+
 networks:
   interview-network:
     driver: bridge

@@ -14,4 +14,3 @@ build-image-service:
 	
 run-service:
 	go run main.go -configPath=./config/ -configName=config.local.json
-
