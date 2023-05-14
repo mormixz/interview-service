@@ -2,7 +2,7 @@
 
 Service using Go and MongoDB
 
-## Start Service
+## Get started
 ```bash
 docker-compose up -d
 ```
