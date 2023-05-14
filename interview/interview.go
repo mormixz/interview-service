@@ -2,6 +2,7 @@ package interview
 
 import (
 	"context"
+	"sort"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -43,8 +44,7 @@ func (s *Service) GetInterview(id string) (*models.Interview, error) {
 
 	interview := &models.Interview{}
 	query := bson.M{"_id": convertStringtoPrimitiveID(id)}
-	options := options.FindOne().SetSort(bson.D{primitive.E{Key: "comment.created_at", Value: 1}})
-	if err := collection.FindOne(ctx, query, options).Decode(&interview); err != nil {
+	if err := collection.FindOne(ctx, query).Decode(&interview); err != nil {
 		return nil, err
 	}
 
@@ -53,6 +53,10 @@ func (s *Service) GetInterview(id string) (*models.Interview, error) {
 	for index, comment := range interview.Comments {
 		interview.Comments[index].CreatedByUser, _ = s.GetUsers(comment.CreatedBy.Hex())
 	}
+
+	sort.Slice(interview.Comments, func(i, j int) bool {
+		return interview.Comments[i].CreatedAt.After(*interview.Comments[j].CreatedAt)
+	})
 
 	return interview, nil
 }
@@ -63,8 +67,14 @@ func (s *Service) GetInterviewAll(status string, limit int) ([]*models.Interview
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(s.dbStore.ConnectionTimeout)*time.Second)
 	defer cancel()
 
-	query := bson.M{"status": status}
-	options := options.Find().SetLimit(int64(limit)).SetSort(bson.D{primitive.E{Key: "created_at", Value: 1}})
+	var query interface{}
+	if status == "all" {
+		query = bson.D{}
+	} else {
+		query = bson.M{"status": status}
+	}
+
+	options := options.Find().SetLimit(int64(limit)).SetSort(bson.D{{Key: "created_at", Value: 1}})
 	cur, err := collection.Find(ctx, query, options)
 	if err != nil {
 		return nil, err
@@ -102,28 +112,13 @@ func (s *Service) UpdateInterview(id string, updateInterview *models.Interview) 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(s.dbStore.ConnectionTimeout)*time.Second)
 	defer cancel()
 
+	dateTimeNow := time.Now()
 	query := bson.M{"_id": convertStringtoPrimitiveID(id)}
 	update := bson.M{"$set": bson.M{
 		"description": updateInterview.Description,
 		"status":      updateInterview.Status,
-		"updated_at":  updateInterview.UpdatedAt,
+		"updated_at":  &dateTimeNow,
 	}}
-
-	if _, err := collection.UpdateOne(ctx, query, update); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (s *Service) FlushCommentInterview(id string) error {
-	collection := s.dbStore.GetCollection(INTERVIEW_COLLECTION)
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(s.dbStore.ConnectionTimeout)*time.Second)
-	defer cancel()
-
-	query := bson.M{"_id": convertStringtoPrimitiveID(id)}
-	update := bson.M{"$set": bson.M{"comments": []models.Comment{}}}
 
 	if _, err := collection.UpdateOne(ctx, query, update); err != nil {
 		return err
@@ -138,10 +133,13 @@ func (s *Service) UpdateCommentInterview(id string, comment models.Comment) erro
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(s.dbStore.ConnectionTimeout)*time.Second)
 	defer cancel()
 
-	comment.CreatedBy = comment.CreatedByUser.ID
-
+	dateTimeNow := time.Now()
 	query := bson.M{"_id": convertStringtoPrimitiveID(id)}
-	update := bson.M{"$push": bson.M{"comments": comment}}
+	update := bson.M{"$push": bson.M{"comments": models.Comment{
+		Message:   comment.Message,
+		CreatedBy: comment.CreatedByUser.ID,
+		CreatedAt: &dateTimeNow,
+	}}}
 
 	if _, err := collection.UpdateOne(ctx, query, update); err != nil {
 		return err
