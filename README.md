@@ -9,22 +9,22 @@ docker-compose up -d
 
 ## APIs
 ### Get Interview  
-api for get interview using interview_id
+- api for get interview using interview_id
 ```bash
 GET http://{{host}}/interview/{{interview_id}} HTTP/1.1
 Content-Type: application/json
 ```
 ### Get List Interview
-api for get list interview with querystring
-* limit - using for limit number of list interview 
-* status - "In Progress", "To Do", "Done"
+-  api for get list interview with querystring
+    * limit - using for limit number of list interview 
+    * status - "In Progress", "To Do", "Done"
 ```bash
 GET http://{{host}}/interview/all?limit={{limit}}&status{{status}} HTTP/1.1
 Content-Type: application/json
 ```
 
 ### Update Interview Comment
-api for update interview comment
+- api for update interview comment
 ```bash
 PUT http://{{host}}/interview/{{interview_id}}/comment HTTP/1.1
 Content-Type: application/json
@@ -38,7 +38,7 @@ Content-Type: application/json
 }
 ```
 ### Update Interview Detail
-api for update interview status
+- api for update interview status
 ```bash
 PUT http://{{host}}/interview/{{interview_id}}/update HTTP/1.1
 Content-Type: application/json
